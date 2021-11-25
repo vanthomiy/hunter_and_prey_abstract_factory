@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripte.Fabrik
 {
@@ -10,12 +11,17 @@ namespace Assets.Scripte.Fabrik
     {
         public IBeuteThema LiefereBeuteThema()
         {
-            return new ThemaWaldHase();
+            return new ThemaWaldBeute();
         }
 
         public IJägerThema LiefereJägerThema()
         {
-            return new ThemaWaldFuchs();
+            return new ThemaWaldJäger();
+        }
+
+        public GameObject LiefereUmweltThema()
+        {
+            return Resources.Load("Umwelt/WaldUmwelt") as GameObject;
         }
     }
 }

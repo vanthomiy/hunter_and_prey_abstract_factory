@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 541272194}
   - component: {fileID: 541272193}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Spielfeld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541272192}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -175,7 +175,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5e2948538d3401c4e9b045835fad426a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -343,10 +343,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BeuteAnzahl: 20
   "J\xE4gerAnzahl": 3
-  "l\xE4nge": 25
-  breite: 25
+  "l\xE4nge": 50
+  breite: 50
   "j\xE4gerObekte": []
   beuteObjekte: []
+  spielfeld: {fileID: 541272192}
   "j\xE4gerPrefab": {fileID: 1143592842647293301, guid: c523b734e7179d741a2f388736ded7a6, type: 3}
   beutePrefab: {fileID: 96100561570522082, guid: 89554c0d1fce7ba43a2546175f3099a2, type: 3}
 --- !u!4 &733251405
@@ -357,7 +358,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733251403}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1511174, y: 0.38864923, z: 0.017393053}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

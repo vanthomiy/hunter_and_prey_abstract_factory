@@ -26,6 +26,11 @@ public class JägerObjekt : WesenObjekt
                 target = other.gameObject;
             }
         }
+
+        if (other.CompareTag("grenze"))
+        {
+            inGrenze = true; 
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -54,6 +59,11 @@ public class JägerObjekt : WesenObjekt
             {
                 target = null;
             }
+        }
+
+        if (other.CompareTag("grenze"))
+        {
+            inGrenze = false;
         }
     }
 

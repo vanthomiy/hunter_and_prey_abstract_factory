@@ -21,10 +21,10 @@ namespace Assets.Scripte
 
         public Vector3 rotation;
 
-        public int geschwindigkeit;
         public int warteZeit;
 
         protected bool aktion;
+        protected bool inGrenze;
 
         protected float time;
 
@@ -36,11 +36,18 @@ namespace Assets.Scripte
                 if (target != null)
                 {
                     Debug.Log("Bewege zu Ziel");
-                    bewegungsStrategie.Bewege(animator, target, this.gameObject, geschwindigkeit);
+                    if (!inGrenze)
+                    {
+                        bewegungsStrategie.Bewege(animator, target.transform.position, this.gameObject);
+                    }
+                    else
+                    {
+                        bewegungsStrategie.Bewege(this.gameObject);
+                    }
                 }
                 else
                 {
-                    bewegungsStrategie.Bewege(animator, this.gameObject, geschwindigkeit);
+                    bewegungsStrategie.Bewege(animator, this.gameObject);
                 }
             }
 
@@ -51,7 +58,6 @@ namespace Assets.Scripte
                 collider.enabled = true;
             }
         }
-
 
 
         public void SetzeThema(IWesenThema wesen)

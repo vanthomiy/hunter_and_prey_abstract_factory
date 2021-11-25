@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripte.Fabrik
 {
@@ -10,5 +11,6 @@ namespace Assets.Scripte.Fabrik
     {
         IJägerThema LiefereJägerThema();
         IBeuteThema LiefereBeuteThema();
+        GameObject LiefereUmweltThema();
     }
 }

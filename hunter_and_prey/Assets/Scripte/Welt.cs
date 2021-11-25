@@ -15,6 +15,7 @@ public class Welt : MonoBehaviour
     public List<JägerObjekt> jägerObekte = new List<JägerObjekt>();
     public List<BeuteObjekt> beuteObjekte = new List<BeuteObjekt>();
 
+    public GameObject spielfeld;
     
     public GameObject jägerPrefab;
     public GameObject beutePrefab;
@@ -74,6 +75,14 @@ public class Welt : MonoBehaviour
 
         var jägerThema = neuesThema.LiefereJägerThema();
         var beuteThema = neuesThema.LiefereBeuteThema();
+        var umweltThema = neuesThema.LiefereUmweltThema();
+
+
+        foreach (Transform child in spielfeld.transform)
+            Destroy(child.gameObject);
+
+        Instantiate(umweltThema, spielfeld.transform);
+        umweltThema.transform.localPosition = Vector3.zero;
 
 
         foreach (var jäger in jägerObekte)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripte.Fabrik
 {
@@ -16,6 +17,11 @@ namespace Assets.Scripte.Fabrik
         public IJägerThema LiefereJägerThema()
         {
             return new ThemaEisFuchs();
+        }
+
+        public GameObject LiefereUmweltThema()
+        {
+            return Resources.Load("Umwelt/ArktikUmwelt") as GameObject;
         }
     }
 }

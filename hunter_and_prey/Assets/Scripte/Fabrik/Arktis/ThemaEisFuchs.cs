@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripte.Fabrik.Wald;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Assets.Scripte.Fabrik
 
         private WesenThemaImpl wesenThema = new WesenThemaImpl
             (
-                new AudioStrategie(null, null), Resources.Load("Aussehen/ArcticFox") as GameObject, new JägerBewegungsStrategie(Resources.Load("Bewegung/ArcticFox") as AnimatorController)
+                new AudioStrategie(null, null), Resources.Load("Aussehen/ArcticFox") as GameObject, new JägerBewegungsStrategie(Resources.Load("Bewegung/ArcticFox") as AnimatorController, 3f)
             );
 
         public AudioStrategie HoleAudioStrategie()

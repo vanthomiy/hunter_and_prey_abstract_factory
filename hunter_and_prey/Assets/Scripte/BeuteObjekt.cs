@@ -15,6 +15,11 @@ public class BeuteObjekt : WesenObjekt
             Debug.Log("Jäger gefunden");
             target = other.gameObject;
         }
+
+        if (other.CompareTag("grenze"))
+        {
+            inGrenze = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -23,6 +28,11 @@ public class BeuteObjekt : WesenObjekt
         {
             Debug.Log("Jäger entkommen");
             target = null;
+        }
+
+        if (other.CompareTag("grenze"))
+        {
+            inGrenze = false;
         }
     }
 
