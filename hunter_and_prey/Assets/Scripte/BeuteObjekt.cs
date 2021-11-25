@@ -6,9 +6,11 @@ using UnityEngine;
 public class BeuteObjekt : WesenObjekt
 {
 
+
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("jäger"))
+        if (other.CompareTag("jäger") && !aktion)
         {
             Debug.Log("Jäger gefunden");
             target = other.gameObject;
@@ -24,5 +26,16 @@ public class BeuteObjekt : WesenObjekt
         }
     }
 
+    public override void AktionAusführen()
+    {
+        aktion = true;
+        target = null;
+        time = Time.time + warteZeit;
 
+        var collider = GetComponent<SphereCollider>();
+        collider.enabled = false;
+
+        bewegungsStrategie.AktionAusführen(animator);
+        audioStrategie.AktionAusführen(GetComponent<AudioSource>());
+    }
 }

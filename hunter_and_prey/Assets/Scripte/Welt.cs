@@ -1,3 +1,4 @@
+using Assets.Scripte.Fabrik;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
@@ -5,82 +6,90 @@ using UnityEngine;
 
 public class Welt : MonoBehaviour
 {
+    public int BeuteAnzahl;
+    public int JägerAnzahl;
 
+    public int länge;
+    public int breite;
 
+    public List<JägerObjekt> jägerObekte = new List<JägerObjekt>();
+    public List<BeuteObjekt> beuteObjekte = new List<BeuteObjekt>();
+
+    
     public GameObject jägerPrefab;
     public GameObject beutePrefab;
 
-    public AudioClip clipPrefab;
+    private List<IThema> themen = new List<IThema>();
 
-    public List<GameObject> aussehenJägerPrefab = new List<GameObject>();
-    public List<GameObject> aussehenBeutePrefab = new List<GameObject>();
-    public List<JägerObjekt> jägerObekte = new List<JägerObjekt>();
-    public List<BeuteObjekt> beuteObjekte = new List<BeuteObjekt>();
-    public List<JägerBewegungsStrategie> jägerBewegung = new List<JägerBewegungsStrategie>();
-    public List<BeuteBewegungsStrategie> beuteBewegung = new List<BeuteBewegungsStrategie>();
-    public List<AnimatorController> animationBeuteController = new List<AnimatorController>();
-    public List<AnimatorController> animationJägerController = new List<AnimatorController>();
+
+    private int aktuellesThema = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        jägerBewegung.Add(new JägerBewegungsStrategie(5, animationJägerController[0]));
-        jägerBewegung.Add(new JägerBewegungsStrategie(5, animationJägerController[1]));
 
-        beuteBewegung.Add(new BeuteBewegungsStrategie(0.5f, animationBeuteController[0]));
-        beuteBewegung.Add(new BeuteBewegungsStrategie(2, animationBeuteController[1]));
+        themen = new List<IThema> { new ThemaArktis(), new ThemaWald() };
 
-        WesenImpl wüstenThemaJäger = new WesenImpl();
-        wüstenThemaJäger.aussehen = aussehenJägerPrefab[aussehen];
-        wüstenThemaJäger.audioStrategie = new AudioStrategie(clipPrefab, clipPrefab);
-        wüstenThemaJäger.bewegungsStrategie = jägerBewegung[aussehen];
+        ErstelleJägerUndGejagte();
+        SetzeThema();
+    }
 
-        WesenImpl wüstenThemaBeute = new WesenImpl();
-        wüstenThemaBeute.aussehen = aussehenBeutePrefab[aussehen];
-        wüstenThemaBeute.audioStrategie = new AudioStrategie(clipPrefab, clipPrefab);
-        wüstenThemaBeute.bewegungsStrategie = beuteBewegung[aussehen];
+    private void ErstelleJägerUndGejagte()
+    {
+        for (int i = 0; i < JägerAnzahl; i++)
+        {
+            var jäger = Instantiate(jägerPrefab, this.transform);
+            jäger.name = "Jäger " + i;
+            jäger.transform.position = new Vector3(Random.Range(-breite / 2, breite / 2), 0, Random.Range(-länge / 2, länge / 2));
+
+            jägerObekte.Add(jäger.GetComponent<JägerObjekt>());
+
+        }
+
+        for (int i = 0; i < BeuteAnzahl; i++)
+        {
+            var beute = Instantiate(beutePrefab, this.transform);
+            beute.name = "Beute " + i;
+
+            beute.transform.position = new Vector3(Random.Range(-breite / 2, breite / 2), 0, Random.Range(-länge / 2, länge / 2));
+
+            beuteObjekte.Add(beute.GetComponent<BeuteObjekt>());
+
+        }
+    }
+
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Setze neues thema");
+            SetzeThema();
+        }
+    }
+
+    private void SetzeThema()
+    {
+        var neuesThema = themen[aktuellesThema++];
+
+        var jägerThema = neuesThema.LiefereJägerThema();
+        var beuteThema = neuesThema.LiefereBeuteThema();
+
 
         foreach (var jäger in jägerObekte)
         {
-            jäger.SetzeThema(wüstenThemaJäger);
+            jäger.SetzeThema(jägerThema);
         }
 
-        foreach (var neute in beuteObjekte)
+        foreach (var beute in beuteObjekte)
         {
-            neute.SetzeThema(wüstenThemaBeute);
+            beute.SetzeThema(beuteThema);
         }
 
-    }
-
-    float time = 0;
-    float time1 = 0;
-
-    int aussehen = 0;
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        /*
-        if (time < Time.time)
+        if (aktuellesThema >= themen.Count)
         {
-            time = Time.time + 3;
-
-            WesenImpl wüstenThema = new WesenImpl();
-            wüstenThema.aussehen = aussehenPrefab[aussehen];
-            wüstenThema.audioStrategie = new AudioStrategie(clipPrefab, clipPrefab);
-            wüstenThema.bewegungsStrategie = jägerBewegung[aussehen++];
-
-            foreach (var jäger in jägerObekte)
-            {
-                jäger.SetzeThema(wüstenThema);
-            }
-
-            if (aussehen >= aussehenPrefab.Count)
-            {
-                aussehen = 0;
-            }
-        }*/
+            aktuellesThema = 0;
+        }
 
     }
 }

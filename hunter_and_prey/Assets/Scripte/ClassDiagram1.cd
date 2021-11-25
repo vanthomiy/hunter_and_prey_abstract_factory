@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Assets.Scripte.WesenObjekt">
+    <Position X="7.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAAAAAKAAAAAIAAAAAAAAAwAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripte\WesenObjekt.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="audioStrategie" />
+      <Field Name="bewegungsStrategie" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="JägerObjekt">
+    <Position X="8.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripte\JägerObjekt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Welt">
+    <Position X="10.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIAQAAiCAABAIAEAgAAAACBgCEAAoAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripte\Welt.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="jägerObekte" />
+      <Field Name="beuteObjekte" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WesenImpl">
+    <Position X="14" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAQAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripte\WesenImpl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JägerBewegungsStrategie" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAAAAAAAEAIAAAAAAAAAACQAAAAAIICAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Scripte\BewegungsStrategie.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BeuteBewegungsStrategie" BaseTypeListCollapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAEAIAAAAAAAAAACAAAAAAIAAAAAAAAAAQAAQ=</HashCode>
+      <FileName>Assets\Scripte\BewegungsStrategie.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AudioStrategie" Collapsed="true">
+    <Position X="4.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAIAAAEAAAAQAAAIAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripte\AudioStrategie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BeuteObjekt">
+    <Position X="6" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripte\BeuteObjekt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IBewegungsStrategie" Collapsed="true">
+    <Position X="2" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Scripte\BewegungsStrategie.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

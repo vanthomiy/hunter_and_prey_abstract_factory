@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Assets.Scripte.Fabrik;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Assets.Scripte
@@ -12,53 +14,62 @@ namespace Assets.Scripte
         public GameObject target;
 
         private GameObject aussehen;
-        private AudioStrategie audioStrategie;
-        private IBewegungsStrategie bewegungsStrategie;
+        protected AudioStrategie audioStrategie;
+        protected IBewegungsStrategie bewegungsStrategie;
 
-        public bool aktion;
+        protected Animator animator;
+
+        public Vector3 rotation;
+
+        public int geschwindigkeit;
+        public int warteZeit;
+
+        protected bool aktion;
+
+        protected float time;
 
         void Update()
         {
             if (bewegungsStrategie != null && !aktion)
             {
+                Debug.Log(this.gameObject.name);
                 if (target != null)
                 {
                     Debug.Log("Bewege zu Ziel");
-                    bewegungsStrategie.Bewege(target);
+                    bewegungsStrategie.Bewege(animator, target, this.gameObject, geschwindigkeit);
                 }
                 else
                 {
-                    bewegungsStrategie.Bewege();
+                    bewegungsStrategie.Bewege(animator, this.gameObject, geschwindigkeit);
                 }
             }
 
-            if (aktion)
+            if (aktion && time < Time.time)
             {
-                AktionAusführen();
+                aktion = false;
+                var collider = GetComponent<SphereCollider>();
+                collider.enabled = true;
             }
         }
 
-        public void SetzeThema(WesenImpl wesen)
+
+
+        public void SetzeThema(IWesenThema wesen)
         {
             if (aussehen != null)
             {
                 Destroy(aussehen);
             }
-            aussehen = Instantiate(wesen.aussehen, this.transform);
-            
-            audioStrategie = wesen.audioStrategie;
-            bewegungsStrategie = wesen.bewegungsStrategie;
-            
-            bewegungsStrategie.InitiereBewegungsStrategie(aussehen.GetComponent<Animator>(), this.gameObject);
-            audioStrategie.InitiereAudioStrategie(GetComponent<AudioSource>());
+            aussehen = Instantiate(wesen.HoleAussehen(), this.transform);
+            aussehen.transform.localPosition = Vector3.zero;
 
+            audioStrategie = wesen.HoleAudioStrategie();
+            bewegungsStrategie = wesen.HoleBewegungsStrategie();
+
+            animator = aussehen.GetComponent<Animator>();
+            aussehen.GetComponent<Animator>().runtimeAnimatorController = bewegungsStrategie.LiefereAnimation();
         }
 
-        public void AktionAusführen()
-        {
-            bewegungsStrategie.AktionAusführen();
-            audioStrategie.AktionAusführen();
-        }
-
+        public virtual void AktionAusführen() { }
     }
 }

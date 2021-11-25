@@ -6,129 +6,113 @@ using UnityEngine;
 
 public interface IBewegungsStrategie
 {
-
-    void Bewege();
-    void Bewege(GameObject target);
-    void InitiereBewegungsStrategie(Animator animator, GameObject beute);
-    void AktionAusführen();
+    AnimatorController LiefereAnimation();
+    void Bewege(Animator animator, GameObject self, float geschwindigkeit);
+    void Bewege(Animator animator, GameObject target, GameObject self, float geschwindigkeit);
+    void AktionAusführen(Animator animator);
 
 }
 
 public class JägerBewegungsStrategie : IBewegungsStrategie
 {
-    private Animator animator;
-    public AnimatorController animationController;
-    private GameObject jäger;
-
-    public JägerBewegungsStrategie(float geschwindigkeit, AnimatorController animationController)
+    public JägerBewegungsStrategie(AnimatorController animatorController)
     {
-        this.geschwindigkeit = geschwindigkeit;
-        this.animationController = animationController;
-        this.aktuelleGeschwindigkeit = geschwindigkeit / 4;
+        this.animatorController = animatorController;
     }
 
-    private float geschwindigkeit;
-    private float aktuelleGeschwindigkeit;
+    private AnimatorController animatorController;
 
-    private int letzterRichtungswechsel = 0;
-    private Vector3 moveRotation;
-    public void Bewege()
+    public void Bewege(Animator animator, GameObject jäger, float geschwindigkeit)
     {
-        this.animator.SetBool("rennen", false);
-        this.animator.SetBool("fressen", false);
-        this.animator.SetBool("laufen", true);
-        Debug.Log("Laufen");
+        geschwindigkeit = geschwindigkeit / 4;
 
+        animator.SetBool("rennen", false);
+        animator.SetBool("fressen", false);
+        animator.SetBool("laufen", true);
 
-        if (letzterRichtungswechsel++ > 200)
+        var moveRotation = jäger.GetComponent<JägerObjekt>().rotation;
+
+        if (Random.Range(0,200) < 5)
         {
-            letzterRichtungswechsel = 0;
-            moveRotation = jäger.transform.localEulerAngles + new Vector3(0, (Random.value - 0.5f) * 180 , 0);
+            moveRotation = jäger.GetComponent<JägerObjekt>().rotation = jäger.transform.localEulerAngles + new Vector3(0, (Random.value - 0.5f) * 180 , 0);
         }
 
-        aktuelleGeschwindigkeit = Mathf.Lerp(aktuelleGeschwindigkeit, geschwindigkeit / 4, aktuelleGeschwindigkeit * Time.deltaTime);
+        //aktuelleGeschwindigkeit = Mathf.Lerp(aktuelleGeschwindigkeit, geschwindigkeit / 6, aktuelleGeschwindigkeit * Time.deltaTime);
 
-        var desiredRotQ = Quaternion.Euler(moveRotation.x, moveRotation.y, moveRotation.z);
-        jäger.transform.rotation = Quaternion.Lerp(jäger.transform.rotation, desiredRotQ, Time.deltaTime * this.geschwindigkeit);
-        jäger.transform.position += jäger.transform.forward * aktuelleGeschwindigkeit * Time.deltaTime;
+        var desiredRotQ = Quaternion.Euler(moveRotation);
+        jäger.transform.rotation = Quaternion.Lerp(jäger.transform.rotation, desiredRotQ, Time.deltaTime * geschwindigkeit);
+        jäger.transform.position += jäger.transform.forward * geschwindigkeit * Time.deltaTime;
 
     }
 
-    public void Bewege(GameObject target)
+    public void Bewege(Animator animator, GameObject target, GameObject jäger, float geschwindigkeit)
     {
-        this.animator.SetBool("rennen", true);
-        this.animator.SetBool("fressen", false);
-        this.animator.SetBool("laufen", false);
+        animator.SetBool("rennen", true);
+        animator.SetBool("fressen", false);
+        animator.SetBool("laufen", false);
 
-        aktuelleGeschwindigkeit = Mathf.Lerp(aktuelleGeschwindigkeit, geschwindigkeit, aktuelleGeschwindigkeit * Time.deltaTime);
+        //aktuelleGeschwindigkeit = Mathf.Lerp(aktuelleGeschwindigkeit, geschwindigkeit, aktuelleGeschwindigkeit * Time.deltaTime);
 
         var targetRotation = Quaternion.LookRotation(target.transform.position - jäger.transform.position);
         // Smoothly rotate towards the target point.
         jäger.transform.rotation = Quaternion.Slerp(jäger.transform.rotation, targetRotation, geschwindigkeit * Time.deltaTime);
-        jäger.transform.position += jäger.transform.forward * aktuelleGeschwindigkeit * Time.deltaTime;
+        jäger.transform.position += jäger.transform.forward * geschwindigkeit * Time.deltaTime;
 
-        Debug.Log("Bewege zu " + target.transform.position);
+        //Debug.Log("Bewege zu " + target.transform.position);
     }
 
-    public void AktionAusführen()
+    public void AktionAusführen(Animator animator)
     {
-        this.animator.SetBool("rennen", false);
-        this.animator.SetBool("fressen", true);
-        this.animator.SetBool("laufen", false);
+        animator.SetBool("rennen", false);
+        animator.SetBool("fressen", true);
+        animator.SetBool("laufen", false);
     }
 
-    public void InitiereBewegungsStrategie(Animator animator, GameObject jäger)
+    public AnimatorController LiefereAnimation()
     {
-        this.jäger = jäger;
-        this.animator = animator;
-        this.animator.runtimeAnimatorController = animationController;
+        return animatorController;
     }
 }
 
 public class BeuteBewegungsStrategie : IBewegungsStrategie
 {
-    private GameObject beute;
-    private Animator animator;
-    public AnimatorController animationController;
-
-    public BeuteBewegungsStrategie(float geschwindigkeit, AnimatorController animationController)
+    public BeuteBewegungsStrategie(AnimatorController animatorController)
     {
-        this.geschwindigkeit = geschwindigkeit;
-        this.animationController = animationController;
+        this.animatorController = animatorController;
     }
 
-    private float geschwindigkeit;
+    private AnimatorController animatorController;
 
-    public void Bewege()
+    public void Bewege(Animator animator, GameObject beute, float geschwindigkeit)
     {
-        this.animator.SetBool("rennen", false);
-        this.animator.SetBool("sterben", false);
+        animator.SetBool("rennen", false);
+        animator.SetBool("sterben", false);
     }
 
-    public void Bewege(GameObject jäger)
+    public void Bewege(Animator animator, GameObject target, GameObject beute, float geschwindigkeit)
     {
-        this.animator.SetBool("rennen", true);
-        this.animator.SetBool("sterben", false);
+        geschwindigkeit = geschwindigkeit / 1.5f;
 
-        if (this.animator.GetCurrentAnimatorStateInfo(0).IsTag("Run"))
+        animator.SetBool("rennen", true);
+        animator.SetBool("sterben", false);
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Run"))
         {
-            var fluchtPosition = beute.transform.position + Vector3.Normalize(beute.transform.position - jäger.transform.position) * 5;
+            var fluchtPosition = beute.transform.position + Vector3.Normalize(beute.transform.position - target.transform.position) * 5;
 
             beute.transform.LookAt(fluchtPosition);
             beute.transform.position = Vector3.MoveTowards(beute.transform.position, fluchtPosition, geschwindigkeit * Time.deltaTime);
         }
     }
 
-    public void AktionAusführen()
+    public void AktionAusführen(Animator animator)
     {
-        this.animator.SetBool("rennen", false);
-        this.animator.SetBool("sterben", true);
+        animator.SetBool("sterben", true);
+        animator.SetBool("rennen", false);
     }
 
-    public void InitiereBewegungsStrategie(Animator animator, GameObject beute)
+    public AnimatorController LiefereAnimation()
     {
-        this.beute = beute;
-        this.animator = animator;
-        this.animator.runtimeAnimatorController = animationController;
+        return animatorController;
     }
 }

@@ -14,18 +14,12 @@ public class AudioStrategie
 
     private AudioClip aktionAudio;
 
-    private AudioSource audioSource;
-
-    public void InitiereAudioStrategie(AudioSource audioSource)
-    {
-        this.audioSource = audioSource;
-    }
-    public void AktionAusführen()
+    public void AktionAusführen(AudioSource audioSource)
     {
         audioSource.clip = aktionAudio;
         audioSource.Play();
     }
-    public void Aktion1Ausführen()
+    public void Aktion1Ausführen(AudioSource audioSource)
     {
         audioSource.clip = entdecktAudio;
         audioSource.Play();
