@@ -1,17 +1,21 @@
 ﻿using Assets.Scripte.Fabrik;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Assets.Scripte
 {
+    public enum Status
+    {
+        Standard,
+        Verfolgung,
+        ZurMitte,
+        Aktion
+    }
+
     public class WesenObjekt : MonoBehaviour
     {
         public GameObject target;
+
+        protected Status status;
 
         private GameObject aussehen;
         protected AudioStrategie audioStrategie;
@@ -22,43 +26,8 @@ namespace Assets.Scripte
         public Vector3 rotation;
 
         public int warteZeit;
-
-        protected bool aktion;
-        protected bool inGrenze;
-
         protected float time;
-
-        void Update()
-        {
-            if (bewegungsStrategie != null && !aktion)
-            {
-                Debug.Log(this.gameObject.name);
-                if (target != null)
-                {
-                    Debug.Log("Bewege zu Ziel");
-                    if (!inGrenze)
-                    {
-                        bewegungsStrategie.Bewege(animator, target.transform.position, this.gameObject);
-                    }
-                    else
-                    {
-                        bewegungsStrategie.Bewege(this.gameObject);
-                    }
-                }
-                else
-                {
-                    bewegungsStrategie.Bewege(animator, this.gameObject);
-                }
-            }
-
-            if (aktion && time < Time.time)
-            {
-                aktion = false;
-                var collider = GetComponent<SphereCollider>();
-                collider.enabled = true;
-            }
-        }
-
+        protected bool themaGewechselt;
 
         public void SetzeThema(IWesenThema wesen)
         {
@@ -74,6 +43,16 @@ namespace Assets.Scripte
 
             animator = aussehen.GetComponent<Animator>();
             aussehen.GetComponent<Animator>().runtimeAnimatorController = bewegungsStrategie.LiefereAnimation();
+            
+
+
+            themaGewechselt = true;
+
+            if (status == Status.Aktion)
+            {
+                bewegungsStrategie.AktionAusführen(this.gameObject, animator);
+            }
+
         }
 
         public virtual void AktionAusführen() { }

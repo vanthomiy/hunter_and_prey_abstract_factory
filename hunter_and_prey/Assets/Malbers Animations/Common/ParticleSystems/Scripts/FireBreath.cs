@@ -5,6 +5,12 @@ namespace MalbersAnimations
     public class FireBreath : MonoBehaviour
     {
         ParticleSystem.EmissionModule emission;
+        public bool aktive = false;
+        
+        void Update()
+        {
+            Activate(aktive);
+        }
 
         void Start()
         {

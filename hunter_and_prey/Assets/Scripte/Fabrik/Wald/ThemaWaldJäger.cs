@@ -1,10 +1,4 @@
 ﻿using Assets.Scripte.Fabrik.Wald;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Assets.Scripte.Fabrik
@@ -14,7 +8,7 @@ namespace Assets.Scripte.Fabrik
 
         private WesenThemaImpl wesenThema = new WesenThemaImpl
             (
-                new AudioStrategie(null, null), Resources.Load("Aussehen/WaldJäger") as GameObject, new JägerBewegungsStrategie(Resources.Load("Bewegung/WaldJäger") as AnimatorController, 4.5f)
+                new AudioStrategie(null, null), Resources.Load("Aussehen/WaldJäger") as GameObject, new JägerBewegungsStrategie(Resources.Load("Bewegung/WaldJäger") as RuntimeAnimatorController, 4.5f, 0f, 1.5f)
             );
 
         public AudioStrategie HoleAudioStrategie()

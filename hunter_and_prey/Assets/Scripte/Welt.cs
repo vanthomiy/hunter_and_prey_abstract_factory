@@ -1,7 +1,5 @@
 using Assets.Scripte.Fabrik;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class Welt : MonoBehaviour
@@ -29,7 +27,7 @@ public class Welt : MonoBehaviour
     void Start()
     {
 
-        themen = new List<IThema> { new ThemaArktis(), new ThemaWald() };
+        themen = new List<IThema> { new ThemaArktis(), new ThemaWald(), new ThemaGot() };
 
         ErstelleJägerUndGejagte();
         SetzeThema();
@@ -62,7 +60,7 @@ public class Welt : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Setze neues thema");
             SetzeThema();
@@ -76,7 +74,6 @@ public class Welt : MonoBehaviour
         var jägerThema = neuesThema.LiefereJägerThema();
         var beuteThema = neuesThema.LiefereBeuteThema();
         var umweltThema = neuesThema.LiefereUmweltThema();
-
 
         foreach (Transform child in spielfeld.transform)
             Destroy(child.gameObject);

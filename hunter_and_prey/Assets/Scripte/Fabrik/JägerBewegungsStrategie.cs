@@ -1,20 +1,41 @@
-﻿using UnityEditor.Animations;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripte.Fabrik.Wald
 {
     internal class JägerBewegungsStrategie : IBewegungsStrategie
     {
-        public JägerBewegungsStrategie(AnimatorController animatorController, float geschwindigkeit)
+        public JägerBewegungsStrategie(RuntimeAnimatorController animatorController, float geschwindigkeit, float höhe, float abstand)
         {
             this.animatorController = animatorController;
             this.geschwindigkeit = geschwindigkeit;
+            this.höhe = höhe;
+            this.abstand = abstand;
         }
 
-        private AnimatorController animatorController;
+        private RuntimeAnimatorController animatorController;
         private float geschwindigkeit;
+        private float höhe;
+        private float abstand;
 
-        public void Bewege(Animator animator, GameObject jäger)
+        public float LiefereAbstand()
+        {
+            return this.abstand;
+        }
+
+        public void AktionAusführen(GameObject self, Animator animator)
+        {
+            animator.SetBool("rennen", false);
+            animator.SetBool("fressen", true);
+            animator.SetBool("laufen", false);
+
+        }
+
+        public RuntimeAnimatorController LiefereAnimation()
+        {
+            return animatorController;
+        }
+
+        public void BewegungStandard(GameObject self, Animator animator)
         {
             var laufGeschwinndigkeit = geschwindigkeit / 4;
 
@@ -22,54 +43,52 @@ namespace Assets.Scripte.Fabrik.Wald
             animator.SetBool("fressen", false);
             animator.SetBool("laufen", true);
 
-            var moveRotation = jäger.GetComponent<JägerObjekt>().rotation;
+            var moveRotation = self.GetComponent<JägerObjekt>().rotation;
 
             if (Random.Range(0, 200) < 5)
             {
-                moveRotation = jäger.GetComponent<JägerObjekt>().rotation = jäger.transform.localEulerAngles + new Vector3(0, (Random.value - 0.5f) * 180, 0);
+                moveRotation = self.GetComponent<JägerObjekt>().rotation = self.transform.localEulerAngles + new Vector3(0, (Random.value - 0.5f) * 180, 0);
             }
 
-            //aktuelleGeschwindigkeit = Mathf.Lerp(aktuelleGeschwindigkeit, geschwindigkeit / 6, aktuelleGeschwindigkeit * Time.deltaTime);
-
             var desiredRotQ = Quaternion.Euler(moveRotation);
-            jäger.transform.rotation = Quaternion.Lerp(jäger.transform.rotation, desiredRotQ, Time.deltaTime * laufGeschwinndigkeit);
-            jäger.transform.position += jäger.transform.forward * laufGeschwinndigkeit * Time.deltaTime;
+            self.transform.rotation = Quaternion.Lerp(self.transform.rotation, desiredRotQ, Time.deltaTime * laufGeschwinndigkeit);
+            
+            self.transform.position = new Vector3(self.transform.position.x, höhe, self.transform.position.z);
 
+            self.transform.localEulerAngles = new Vector3(0, self.transform.localEulerAngles.y, 0);
+            self.transform.position += self.transform.forward * laufGeschwinndigkeit * Time.deltaTime;
         }
 
-        public void Bewege(Animator animator, Vector3 targetPosition, GameObject jäger)
+        public void BewegungVerfolgung(GameObject self, Animator animator, Vector3 targetPosition, bool themaGewechselt)
         {
             animator.SetBool("rennen", true);
             animator.SetBool("fressen", false);
             animator.SetBool("laufen", false);
 
-            //aktuelleGeschwindigkeit = Mathf.Lerp(aktuelleGeschwindigkeit, geschwindigkeit, aktuelleGeschwindigkeit * Time.deltaTime);
+            var targetRotation = Quaternion.LookRotation(targetPosition - self.transform.position);
+            self.transform.rotation = Quaternion.Slerp(self.transform.rotation, targetRotation, geschwindigkeit * Time.deltaTime);
 
-            var targetRotation = Quaternion.LookRotation(targetPosition - jäger.transform.position);
-            jäger.transform.rotation = Quaternion.Slerp(jäger.transform.rotation, targetRotation, geschwindigkeit * Time.deltaTime);
-            jäger.transform.position += jäger.transform.forward * geschwindigkeit * Time.deltaTime;
+            //var aktuelleHöhe = Mathf.Lerp(self.transform.position.y, höhe, Time.deltaTime * geschwindigkeit);
+            self.transform.position = new Vector3(self.transform.position.x, höhe, self.transform.position.z);
 
-            //Debug.Log("Bewege zu " + target.transform.position);
+            self.transform.localEulerAngles = new Vector3(0, self.transform.localEulerAngles.y, 0);
+            self.transform.position += self.transform.forward * geschwindigkeit * Time.deltaTime;
         }
 
-        public void AktionAusführen(Animator animator)
+        public void BewegungZurMitte(GameObject self, Animator animator)
         {
-            animator.SetBool("rennen", false);
-            animator.SetBool("fressen", true);
+            animator.SetBool("rennen", true);
+            animator.SetBool("fressen", false);
             animator.SetBool("laufen", false);
-        }
 
-        public void Bewege(GameObject self)
-        {
-            var fluchtPosition = self.transform.position + Vector3.Normalize(self.transform.position - Vector3.zero) * 5;
+            self.transform.position = new Vector3(self.transform.position.x, höhe, self.transform.position.z);
 
-            self.transform.LookAt(fluchtPosition);
-            self.transform.position = Vector3.MoveTowards(self.transform.position, fluchtPosition, geschwindigkeit * Time.deltaTime);
-        }
 
-        public AnimatorController LiefereAnimation()
-        {
-            return animatorController;
+            var targetRotation = Quaternion.LookRotation(-self.transform.position);
+            self.transform.rotation = Quaternion.Slerp(self.transform.rotation, targetRotation, geschwindigkeit * Time.deltaTime);
+            
+            self.transform.localEulerAngles = new Vector3(0, self.transform.localEulerAngles.y, 0);
+            self.transform.position += self.transform.forward * geschwindigkeit * Time.deltaTime;
         }
     }
 }

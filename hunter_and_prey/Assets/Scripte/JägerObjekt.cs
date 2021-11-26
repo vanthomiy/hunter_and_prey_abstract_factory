@@ -1,14 +1,43 @@
 using Assets.Scripte;
+using Assets.Scripte.Fabrik;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class JägerObjekt : WesenObjekt
 {
+    void Update()
+    {
+        if (bewegungsStrategie != null && status != Status.Aktion)
+        {
+            switch (status)
+            {
+                case Status.Standard:
+                    bewegungsStrategie.BewegungStandard(this.gameObject, animator);
+                    break;
+                case Status.Verfolgung:
+                    bewegungsStrategie.BewegungVerfolgung(this.gameObject, animator, target.transform.position, themaGewechselt);
+                    break;
+                case Status.ZurMitte:
+                    bewegungsStrategie.BewegungZurMitte(this.gameObject, animator);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (status == Status.Aktion && time < Time.time)
+        {
+            status = Status.Standard;
+
+            var collider = GetComponent<SphereCollider>();
+            collider.enabled = true;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("beute") && !aktion)
+        if (other.CompareTag("beute") && status != Status.Aktion)
         {
             Debug.Log("Beute gefunden");
 
@@ -25,11 +54,19 @@ public class JägerObjekt : WesenObjekt
             {
                 target = other.gameObject;
             }
+
+            status = Status.Verfolgung;
         }
 
         if (other.CompareTag("grenze"))
         {
-            inGrenze = true; 
+            target = null;
+            status = Status.ZurMitte;
+        }
+
+        if (other.CompareTag("zentrum") && status == Status.ZurMitte)
+        {
+            status = Status.Standard;
         }
     }
 
@@ -39,41 +76,41 @@ public class JägerObjekt : WesenObjekt
         {
             var distanz = Vector3.Distance(this.transform.position, target.transform.position);
 
-            if (distanz < 1f)
+            if (distanz < bewegungsStrategie.LiefereAbstand())
             {
-
                 target.GetComponent<BeuteObjekt>().AktionAusführen();
                 AktionAusführen();
             }
+        }
+
+        if (other.CompareTag("grenze"))
+        {
+            status = Status.ZurMitte;
         }
     }
 
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("beute") && !aktion)
+        if (other.CompareTag("beute") && status != Status.Aktion)
         {
             Debug.Log("Beute entkommen");
 
             if (target != null && other.gameObject == target)
             {
                 target = null;
+                status = Status.Standard;
             }
-        }
-
-        if (other.CompareTag("grenze"))
-        {
-            inGrenze = false;
         }
     }
 
     public override void AktionAusführen()
     {
-        aktion = true;
         target = null;
         time = Time.time + warteZeit;
+        status = Status.Aktion;
 
-        bewegungsStrategie.AktionAusführen(animator);
+        bewegungsStrategie.AktionAusführen(this.gameObject, animator);
         audioStrategie.AktionAusführen(GetComponent<AudioSource>());
     }
 

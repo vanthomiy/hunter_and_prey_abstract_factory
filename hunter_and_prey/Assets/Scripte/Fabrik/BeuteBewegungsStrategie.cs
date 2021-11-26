@@ -1,69 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor.Animations;
+﻿
 using UnityEngine;
 
 namespace Assets.Scripte.Fabrik.Wald
 {
     internal class BeuteBewegungsStrategie : IBewegungsStrategie
     {
-        public BeuteBewegungsStrategie(AnimatorController animatorController, float geschwindigkeit)
+        public BeuteBewegungsStrategie(RuntimeAnimatorController animatorController, float geschwindigkeit, float höhe, float abstand)
         {
             this.animatorController = animatorController;
             this.geschwindigkeit = geschwindigkeit;
+            this.abstand = abstand;
         }
 
-        private AnimatorController animatorController;
+        private RuntimeAnimatorController animatorController;
         private float geschwindigkeit;
+        private float abstand;
 
-        public void Bewege(Animator animator, GameObject self)
+        public float LiefereAbstand()
         {
-            animator.SetBool("rennen", false);
-            animator.SetBool("sterben", false);
+            return this.abstand;
         }
 
-        public void Bewege(Animator animator, Vector3 targetPosition, GameObject beute)
-        {
-            animator.SetBool("rennen", true);
-            animator.SetBool("sterben", false);
 
-            if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Run"))
-            {
-
-                var fluchtPosition = beute.transform.position + Vector3.Normalize(beute.transform.position - targetPosition) * 5;
-
-                var targetRotation = Quaternion.LookRotation(fluchtPosition);
-                beute.transform.rotation = Quaternion.Slerp(beute.transform.rotation, targetRotation, geschwindigkeit * Time.deltaTime);
-                beute.transform.position += beute.transform.forward * geschwindigkeit * Time.deltaTime;
-
-                /*var fluchtPosition = beute.transform.position + Vector3.Normalize(beute.transform.position - targetPosition) * 5;
-
-                beute.transform.LookAt(fluchtPosition);
-                beute.transform.position = Vector3.MoveTowards(beute.transform.position, fluchtPosition, geschwindigkeit * Time.deltaTime);*/
-            }
-        }
-
-        public void Bewege(GameObject self)
-        {
-            var targetRotation = Quaternion.LookRotation(-self.transform.position);
-            self.transform.rotation = Quaternion.Slerp(self.transform.rotation, targetRotation, geschwindigkeit * Time.deltaTime);
-            self.transform.position += self.transform.forward * geschwindigkeit * Time.deltaTime;
-        }
-
-        public void AktionAusführen(Animator animator)
+        public void AktionAusführen(GameObject self, Animator animator)
         {
             animator.SetBool("sterben", true);
             animator.SetBool("rennen", false);
         }
 
-        public AnimatorController LiefereAnimation()
+        public RuntimeAnimatorController LiefereAnimation()
         {
             return animatorController;
         }
 
+        public void BewegungStandard(GameObject self, Animator animator)
+        {
+            animator.SetBool("rennen", false);
+            animator.SetBool("sterben", false);
+        }
 
+        public void BewegungVerfolgung(GameObject self, Animator animator, Vector3 targetPosition, bool themaGewechselt)
+        {
+            animator.SetBool("rennen", true);
+            animator.SetBool("sterben", false);
+            animator.SetBool("umgeschaltet", themaGewechselt);
+
+            if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Run"))
+            {
+                targetPosition = new Vector3(targetPosition.x, self.transform.position.y, targetPosition.z);
+
+                var fluchtPosition = self.transform.position + Vector3.Normalize(self.transform.position - targetPosition) * 5;
+
+                var targetRotation = Quaternion.LookRotation(fluchtPosition);
+                self.transform.rotation = Quaternion.Slerp(self.transform.rotation, targetRotation, geschwindigkeit * Time.deltaTime);
+                self.transform.localEulerAngles = new Vector3(0, self.transform.localEulerAngles.y, 0);
+                self.transform.position += self.transform.forward * geschwindigkeit * Time.deltaTime;
+            }
+        }
+
+        public void BewegungZurMitte(GameObject self, Animator animator)
+        {
+            animator.SetBool("rennen", true);
+            animator.SetBool("sterben", false);
+
+            var targetRotation = Quaternion.LookRotation(-self.transform.position);
+            self.transform.rotation = Quaternion.Slerp(self.transform.rotation, targetRotation, geschwindigkeit * Time.deltaTime);
+
+            self.transform.localEulerAngles = new Vector3(0, self.transform.localEulerAngles.y, 0);
+            self.transform.position += self.transform.forward * geschwindigkeit * Time.deltaTime;
+        }
     }
 }
