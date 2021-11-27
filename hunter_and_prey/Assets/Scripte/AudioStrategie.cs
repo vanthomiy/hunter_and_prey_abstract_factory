@@ -16,11 +16,21 @@ public class AudioStrategie
 
     public void AktionAusführen(AudioSource audioSource)
     {
+        if (audioSource.isPlaying)
+        {
+            return;
+        }
+
         audioSource.clip = aktionAudio;
         audioSource.Play();
     }
-    public void Aktion1Ausführen(AudioSource audioSource)
+    public void EntdecktAusführen(AudioSource audioSource)
     {
+        if (audioSource.isPlaying)
+        {
+            return;
+        }
+
         audioSource.clip = entdecktAudio;
         audioSource.Play();
     }

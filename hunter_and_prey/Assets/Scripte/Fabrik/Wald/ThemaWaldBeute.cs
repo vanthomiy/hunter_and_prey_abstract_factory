@@ -7,7 +7,7 @@ namespace Assets.Scripte.Fabrik
     {
         private WesenThemaImpl wesenThema = new WesenThemaImpl
         (
-            new AudioStrategie(null, null), Resources.Load("Aussehen/WaldBeute") as GameObject, new BeuteBewegungsStrategie(Resources.Load("Bewegung/WaldBeute") as RuntimeAnimatorController, 3.5f, 0f, 1.5f)
+            new AudioStrategie(Resources.Load("Audio/WaldBeuteEntdeckt") as AudioClip, Resources.Load("Audio/WaldBeuteAktion") as AudioClip), Resources.Load("Aussehen/WaldBeute") as GameObject, new BeuteBewegungsStrategie(Resources.Load("Bewegung/WaldBeute") as RuntimeAnimatorController, 3.5f, 0f, 1.5f)
         );
 
         public AudioStrategie HoleAudioStrategie()

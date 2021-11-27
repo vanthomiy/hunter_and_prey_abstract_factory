@@ -56,27 +56,19 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Assets.Scripte.Fabrik.ThemaArktis" BaseTypeListCollapsed="true">
+  <Class Name="Assets.Scripte.Fabrik.ThemaArktisBeute" BaseTypeListCollapsed="true">
     <Position X="9" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
-      <FileName>Assets\Scripte\Fabrik\Arktis\ThemaArktis.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripte\Fabrik\Arktis\ThemaArktisBeute.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Assets.Scripte.Fabrik.ThemaEisFuchs" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="Assets.Scripte.Fabrik.ThemaArktisJäger" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="10.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAA=</HashCode>
-      <FileName>Assets\Scripte\Fabrik\Arktis\ThemaEisFuchs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="Assets.Scripte.Fabrik.ThemaSchneeHase" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAA=</HashCode>
-      <FileName>Assets\Scripte\Fabrik\Arktis\ThemaSchneeHase.cs</FileName>
+      <FileName>Assets\Scripte\Fabrik\Arktis\ThemaArktisJäger.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>

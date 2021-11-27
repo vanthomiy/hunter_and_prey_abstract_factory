@@ -45,7 +45,7 @@ public class BeuteObjekt : WesenObjekt
             Debug.Log("Jäger gefunden");
             target = other.gameObject;
             status = Status.Verfolgung;
-
+            audioStrategie.EntdecktAusführen(GetComponent<AudioSource>());
         }
 
         if (other.CompareTag("grenze"))

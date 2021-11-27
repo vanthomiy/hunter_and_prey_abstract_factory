@@ -8,7 +8,7 @@ namespace Assets.Scripte.Fabrik
 
         private WesenThemaImpl wesenThema = new WesenThemaImpl
             (
-                new AudioStrategie(null, null), Resources.Load("Aussehen/WaldJäger") as GameObject, new JägerBewegungsStrategie(Resources.Load("Bewegung/WaldJäger") as RuntimeAnimatorController, 4.5f, 0f, 1.5f)
+                new AudioStrategie(Resources.Load("Audio/WaldJägerEntdeckt") as AudioClip, Resources.Load("Audio/WaldJägerAktion") as AudioClip), Resources.Load("Aussehen/WaldJäger") as GameObject, new JägerBewegungsStrategie(Resources.Load("Bewegung/WaldJäger") as RuntimeAnimatorController, 4.5f, 0f, 1.5f)
             );
 
         public AudioStrategie HoleAudioStrategie()

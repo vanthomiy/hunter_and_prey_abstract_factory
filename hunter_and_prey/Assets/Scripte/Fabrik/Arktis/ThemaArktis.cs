@@ -11,17 +11,17 @@ namespace Assets.Scripte.Fabrik
     {
         public IBeuteThema LiefereBeuteThema()
         {
-            return new ThemaSchneeHase();
+            return new ThemaArktisBeute();
         }
 
         public IJägerThema LiefereJägerThema()
         {
-            return new ThemaEisFuchs();
+            return new ThemaArktisJäger();
         }
 
         public GameObject LiefereUmweltThema()
         {
-            return Resources.Load("Umwelt/ArktikUmwelt") as GameObject;
+            return Resources.Load("Umwelt/ArktisUmwelt") as GameObject;
         }
     }
 }

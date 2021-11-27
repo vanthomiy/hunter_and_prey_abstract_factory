@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace Assets.Scripte.Fabrik
 {
-    internal class ThemaSchneeHase : IBeuteThema
+    internal class ThemaArktisJäger : IJägerThema
     {
+
         private WesenThemaImpl wesenThema = new WesenThemaImpl
-        (
-            new AudioStrategie(null, null), Resources.Load("Aussehen/ArcticRabbit") as GameObject, new BeuteBewegungsStrategie(Resources.Load("Bewegung/ArcticRabbit") as RuntimeAnimatorController, 1.5f, 0f, 1f)
-        );
+            (
+                new AudioStrategie(Resources.Load("Audio/ArktisJägerEntdeckt") as AudioClip , Resources.Load("Audio/ArktisJägerAktion") as AudioClip), Resources.Load("Aussehen/ArktisJäger") as GameObject, new JägerBewegungsStrategie(Resources.Load("Bewegung/ArktisJäger") as RuntimeAnimatorController, 3f, 0f, 1f)
+            );
 
         public AudioStrategie HoleAudioStrategie()
         {
