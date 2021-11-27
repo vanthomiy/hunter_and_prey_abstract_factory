@@ -462,7 +462,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   camSpeed: 2
-  value: 7
+  camRotSpeed: 0
+  value: 9
   minHeight: 1
   maxHeight: 5
   minDistance: 0
