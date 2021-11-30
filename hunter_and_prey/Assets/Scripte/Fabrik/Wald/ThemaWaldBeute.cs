@@ -1,7 +1,7 @@
 ﻿using Assets.Scripte.Fabrik.Wald;
 using UnityEngine;
 
-namespace Assets.Scripte.Fabrik
+namespace Assets.Scripte.Fabrik.Wald
 {
     internal class ThemaWaldBeute : IBeuteThema
     {

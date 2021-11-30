@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Assets.Scripte.Fabrik
+namespace Assets.Scripte.Fabrik.Got
 {
     internal class ThemaGotJäger : IJägerThema
     {

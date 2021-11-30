@@ -2,36 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioStrategie
+namespace Assets.Scripte
 {
-    public AudioStrategie(AudioClip entdecktAudio, AudioClip aktionAudio)
+    public class AudioStrategie
     {
-        this.entdecktAudio = entdecktAudio;
-        this.aktionAudio = aktionAudio;
-    }
-
-    private AudioClip entdecktAudio;
-
-    private AudioClip aktionAudio;
-
-    public void AktionAusführen(AudioSource audioSource)
-    {
-        if (audioSource.isPlaying)
+        public AudioStrategie(AudioClip entdecktAudio, AudioClip aktionAudio)
         {
-            return;
+            this.entdecktAudio = entdecktAudio;
+            this.aktionAudio = aktionAudio;
         }
 
-        audioSource.clip = aktionAudio;
-        audioSource.Play();
-    }
-    public void EntdecktAusführen(AudioSource audioSource)
-    {
-        if (audioSource.isPlaying)
-        {
-            return;
-        }
+        private AudioClip entdecktAudio;
 
-        audioSource.clip = entdecktAudio;
-        audioSource.Play();
+        private AudioClip aktionAudio;
+
+        public void AktionAusführen(AudioSource audioSource)
+        {
+            if (audioSource.isPlaying)
+            {
+                return;
+            }
+
+            audioSource.clip = aktionAudio;
+            audioSource.Play();
+        }
+        public void EntdecktAusführen(AudioSource audioSource)
+        {
+            if (audioSource.isPlaying)
+            {
+                return;
+            }
+
+            audioSource.clip = entdecktAudio;
+            audioSource.Play();
+        }
     }
 }

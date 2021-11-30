@@ -1,7 +1,7 @@
 ﻿using Assets.Scripte.Fabrik.Wald;
 using UnityEngine;
 
-namespace Assets.Scripte.Fabrik
+namespace Assets.Scripte.Fabrik.Arktis
 {
     internal class ThemaArktisJäger : IJägerThema
     {

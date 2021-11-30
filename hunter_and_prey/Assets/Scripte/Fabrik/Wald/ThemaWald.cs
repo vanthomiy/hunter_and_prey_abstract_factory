@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripte.Fabrik
+namespace Assets.Scripte.Fabrik.Wald
 {
     internal class ThemaWald : IThema
     {

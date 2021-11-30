@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace Assets.Scripte.Fabrik.Wald
+namespace Assets.Scripte.Fabrik
 {
     internal class BeuteBewegungsStrategie : IBewegungsStrategie
     {
