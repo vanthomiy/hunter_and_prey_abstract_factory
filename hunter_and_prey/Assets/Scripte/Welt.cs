@@ -23,20 +23,10 @@ namespace Assets.Scripte
         public GameObject jägerPrefab;
         public GameObject beutePrefab;
 
-        private List<IThema> themen = new List<IThema>();
 
 
         private int aktuellesThema = 0;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-            themen = new List<IThema> { new ThemaArktis(), new ThemaWald(), new ThemaGot() };
-
-            ErstelleJägerUndGejagte();
-            SetzeThema();
-        }
 
         private void ErstelleJägerUndGejagte()
         {
@@ -70,6 +60,18 @@ namespace Assets.Scripte
                 Debug.Log("Setze neues thema");
                 SetzeThema();
             }
+        }
+
+		private List<IThema> themen = new List<IThema>();
+		
+		// Start is called before the first frame update
+        void Start()
+        {
+
+            themen = new List<IThema> { new ThemaArktis(), new ThemaWald(), new ThemaGot() };
+
+            ErstelleJägerUndGejagte();
+            SetzeThema();
         }
 
         private void SetzeThema()
