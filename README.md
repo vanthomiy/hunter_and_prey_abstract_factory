@@ -4,7 +4,7 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#versions">Versions</a> •
+  <a href="#versions">Start simulation</a> •
 </p>
 
 ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
@@ -23,11 +23,10 @@ You can use the arrow keys and the space bar to controll the simulation.
 * Wit the space bar you can change the design of the game (Arctic -> Forest -> Got)
 
 
-## Versions
+## Start simulation
 
 You can start the simulation either via the .exe in the build path or directly in the browser. 
 
 - For starting the .exe file you have to download the repository or at least the /standaloneBuild folder with all its files.
 - For starting the simulation in the browser you can click the following link which is hosted with Github Pages.
-
-- [Simulation](http://electron.atom.io/)
+[Online Simulation](http://electron.atom.io/)
