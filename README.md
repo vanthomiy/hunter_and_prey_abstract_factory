@@ -7,7 +7,8 @@
   <a href="#versions">Start simulation</a> •
 </p>
 
-![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
+https://user-images.githubusercontent.com/17029614/144269477-273a4185-aa2c-46a0-af2f-eaa9593ae3f9.mp4
+
 
 ## Key Features
 
