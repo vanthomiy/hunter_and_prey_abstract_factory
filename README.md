@@ -27,6 +27,7 @@ You can use the arrow keys and the space bar to controll the simulation.
 
 You can start the simulation either via the .exe in the build path or directly in the browser. 
 
-- For starting the .exe file you have to download the repository or at least the /standaloneBuild folder with all its files.
+- For starting the .exe file you have to download the repository or at least the build folder with all its files.
+[Standalone build](https://github.com/vanthomiy/hunter_and_prey_abstract_factory/tree/main/hunter_and_prey/Build)
 - For starting the simulation in the browser you can click the following link which is hosted with Github Pages.
 [Online Simulation](http://electron.atom.io/)
